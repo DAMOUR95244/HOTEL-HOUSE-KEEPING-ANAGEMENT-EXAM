@@ -1,0 +1,12 @@
+import React,{lazy,Suspense}from'react';import{createRoot}from'react-dom/client';import{BrowserRouter,Routes,Route}from'react-router-dom';import{HotelProvider}from'./context/AppContext';import AppLayout from'./layouts/AppLayout';import'./styles.css';
+const Dashboard=lazy(()=>import('./pages/Dashboard').then(m=>({default:m.Dashboard})));
+const Rooms=lazy(()=>import('./pages/Rooms').then(m=>({default:m.Rooms})));
+const RoomDetails=lazy(()=>import('./pages/RoomDetails'));
+const Tasks=lazy(()=>import('./pages/Tasks').then(m=>({default:m.Tasks})));
+const AssignTask=lazy(()=>import('./pages/AssignTask'));
+const TaskDetails=lazy(()=>import('./pages/TaskDetails'));
+const Staff=lazy(()=>import('./pages/Staff').then(m=>({default:m.Staff})));
+const History=lazy(()=>import('./pages/History').then(m=>({default:m.History})));
+const Reports=lazy(()=>import('./pages/Reports').then(m=>({default:m.Reports})));
+const Loading=()=> <div className="route-loading"><span className="loading-spinner"/>Loading page…</div>;
+createRoot(document.getElementById('root')).render(<React.StrictMode><HotelProvider><BrowserRouter><Suspense fallback={<Loading/>}><Routes><Route element={<AppLayout/>}><Route index element={<Dashboard/>}/><Route path="rooms" element={<Rooms/>}/><Route path="rooms/:roomId" element={<RoomDetails/>}/><Route path="housekeeping-tasks" element={<Tasks/>}/><Route path="housekeeping-tasks/:taskId" element={<TaskDetails/>}/><Route path="assign-task" element={<AssignTask/>}/><Route path="staff" element={<Staff/>}/><Route path="history" element={<History/>}/><Route path="reports" element={<Reports/>}/><Route path="*" element={<Dashboard/>}/></Route></Routes></Suspense></BrowserRouter></HotelProvider></React.StrictMode>);
